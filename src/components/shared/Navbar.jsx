@@ -154,6 +154,18 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          {user && (
+            <Link
+              href="/dashboard"
+              className={`text-sm font-medium transition-colors ${
+                pathname.startsWith("/dashboard")
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              }`}
+            >
+              Dashboard
+            </Link>
+          )}
         </div>
 
         {/* Desktop Actions */}
@@ -202,6 +214,18 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                {user && (
+                  <Link
+                    href="/dashboard"
+                    className={`text-base font-medium ${
+                      pathname.startsWith("/dashboard")
+                        ? "text-primary"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 {!loading && !user && (
                   <div className="mt-5 flex flex-col gap-3 border-t pt-5">
                     <Button variant="outline" asChild>
