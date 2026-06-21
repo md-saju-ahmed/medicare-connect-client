@@ -1,5 +1,6 @@
 import { Geist } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/shared/Footer";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -18,7 +19,10 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
