@@ -40,7 +40,7 @@ const navLinks = [
 
 function UserMenu({ user, onLogout }) {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="relative outline-none ring-2 ring-transparent rounded-full transition-all duration-200 hover:ring-primary/30 focus-visible:ring-primary/60">
         <Avatar className="h-9 w-9">
           <AvatarImage src={user.image} alt={user.name} />
