@@ -1,8 +1,8 @@
 "use client";
 import { HeartPulse, Brain, Eye, Bone, Baby } from "lucide-react";
 import { motion } from "framer-motion";
-import Container from "../shared/Container";
-import SectionTitle from "../shared/SectionTitle";
+import Container from "../../../components/shared/Container";
+import SectionTitle from "../../../components/shared/SectionTitle";
 import { Card, CardContent } from "@/components/ui/card";
 
 const specializations = [

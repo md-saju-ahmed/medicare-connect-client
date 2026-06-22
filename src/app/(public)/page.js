@@ -1,17 +1,11 @@
-import FeaturedDoctors from "@/components/home/FeaturedDoctors";
-import Hero from "@/components/home/Hero";
-import PlatformStats from "@/components/home/PlatformStats";
-import Specialization from "@/components/home/Specialization";
-import WhyChooseUs from "@/components/home/WhyChooseUs";
+import HomePage from "@/features/home/Homepage";
+
+export const metadata = {
+  title: "MediCare Connect | Hospital Appointment & Healthcare Platform",
+  description:
+    "Book appointments with verified doctors, manage healthcare records, and receive quality medical services online.",
+};
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <FeaturedDoctors />
-      <Specialization />
-      <PlatformStats />
-      <WhyChooseUs />
-    </>
-  );
+  return <HomePage />;
 }
