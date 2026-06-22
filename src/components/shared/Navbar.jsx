@@ -38,7 +38,7 @@ const navLinks = [
   },
 ];
 
-function UserMenu({ user, onLogout }) {
+function UserMenu({ user, onLogout, dashboardPath }) {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="relative outline-none ring-2 ring-transparent rounded-full transition-all duration-200 hover:ring-primary/30 focus-visible:ring-primary/60">
@@ -54,9 +54,8 @@ function UserMenu({ user, onLogout }) {
       <DropdownMenuContent
         align="end"
         sideOffset={10}
-        className="w-64 rounded-xl p-2 shadow-lg shadow-black/5 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2"
+        className="w-64 rounded-xl p-2 shadow-lg shadow-black/5"
       >
-        {/* Header */}
         <div className="mb-1 rounded-lg bg-muted/50 px-3 py-3 flex items-center gap-3">
           <span className="relative block shrink-0">
             <Avatar className="h-10 w-10">
@@ -79,8 +78,8 @@ function UserMenu({ user, onLogout }) {
         <DropdownMenuSeparator className="my-1" />
         <DropdownMenuItem asChild>
           <Link
-            href="/dashboard"
-            className="cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:bg-accent"
+            href={dashboardPath}
+            className="cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium"
           >
             <LayoutDashboard className="mr-2.5 h-4 w-4 text-muted-foreground" />
             My Dashboard
@@ -89,13 +88,84 @@ function UserMenu({ user, onLogout }) {
         <DropdownMenuSeparator className="my-1" />
         <DropdownMenuItem
           onClick={onLogout}
-          className="cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium text-destructive transition-colors focus:bg-destructive/10 focus:text-destructive"
+          className="cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium text-destructive"
         >
           <LogOut className="mr-2.5 h-4 w-4" />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function MobileMenu({ user, dashboardPath, pathname, onLogout }) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-10 w-10">
+          <Menu className="h-5 w-5" />
+          <span className="sr-only">Open menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-75 p-6">
+        <div className="flex flex-col gap-6">
+          {/* Mobile Navigation Links */}
+          <nav className="flex flex-col gap-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium transition-colors ${
+                  pathname === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-primary"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            {user && (
+              <Link
+                href={dashboardPath}
+                className={`text-sm font-medium transition-colors ${
+                  pathname.startsWith("/dashboard")
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-primary"
+                }`}
+              >
+                Dashboard
+              </Link>
+            )}
+          </nav>
+
+          {/* Mobile User Actions */}
+          {user ? (
+            <div className="flex flex-col gap-4 pt-4 border-t">
+              <Button
+                variant="destructive"
+                onClick={onLogout}
+                className="w-full"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Log out
+              </Button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3 pt-4 border-t">
+              <Link href="/login">
+                <Button variant="outline" className="w-full">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/register">
+                <Button className="w-full rounded-full">Register</Button>
+              </Link>
+            </div>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -108,12 +178,12 @@ export default function Navbar() {
   const user = session?.user;
   const loading = isPending;
 
+  const dashboardPath = user ? `/dashboard/${user.role}` : "/dashboard/patient";
+
   const handleLogout = async () => {
     try {
       await authClient.signOut();
-
       toast.success("Logged out successfully");
-
       router.push("/");
       router.refresh();
     } catch (error) {
@@ -154,9 +224,10 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+
           {user && (
             <Link
-              href="/dashboard"
+              href={dashboardPath}
               className={`text-sm font-medium transition-colors ${
                 pathname.startsWith("/dashboard")
                   ? "text-primary"
@@ -173,7 +244,11 @@ export default function Navbar() {
           {loading ? (
             <Skeleton className="h-10 w-10 rounded-full" />
           ) : user ? (
-            <UserMenu user={user} onLogout={handleLogout} />
+            <UserMenu
+              user={user}
+              onLogout={handleLogout}
+              dashboardPath={dashboardPath}
+            />
           ) : (
             <>
               <Link
@@ -189,56 +264,28 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile */}
-        <div className="flex items-center gap-2 md:hidden">
+        {/* Mobile Menu */}
+        <div className="flex items-center gap-3 md:hidden">
           {loading ? (
             <Skeleton className="h-10 w-10 rounded-full" />
+          ) : user ? (
+            <UserMenu
+              user={user}
+              onLogout={handleLogout}
+              dashboardPath={dashboardPath}
+            />
           ) : (
-            user && <UserMenu user={user} onLogout={handleLogout} />
+            <Button asChild size="sm" className="rounded-full px-5">
+              <Link href="/login">Login</Link>
+            </Button>
           )}
 
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button size="icon" variant="ghost">
-                <Menu size={26} />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <div className="mt-10 flex flex-col gap-4 p-6">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-base font-medium"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                {user && (
-                  <Link
-                    href="/dashboard"
-                    className={`text-base font-medium ${
-                      pathname.startsWith("/dashboard")
-                        ? "text-primary"
-                        : "text-muted-foreground"
-                    }`}
-                  >
-                    Dashboard
-                  </Link>
-                )}
-                {!loading && !user && (
-                  <div className="mt-5 flex flex-col gap-3 border-t pt-5">
-                    <Button variant="outline" asChild>
-                      <Link href="/login">Login</Link>
-                    </Button>
-                    <Button asChild>
-                      <Link href="/register">Register</Link>
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
+          <MobileMenu
+            user={user}
+            dashboardPath={dashboardPath}
+            pathname={pathname}
+            onLogout={handleLogout}
+          />
         </div>
       </Container>
     </nav>
