@@ -46,7 +46,7 @@ const cardVariants = {
 
 const Specialization = () => {
   return (
-    <section className="py-20 bg-[#f6f3ee]">
+    <section className="py-20">
       <Container>
         <SectionTitle
           title="Browse by Specialization"
