@@ -11,14 +11,19 @@ import Container from "@/components/shared/Container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import ComboboxFilter from "@/components/shared/ComboboxFilter";
 import { authClient } from "@/lib/auth-client";
+
+const roleOptions = [
+  { value: "patient", label: "Patient" },
+  { value: "doctor", label: "Doctor" },
+];
+
+const genderOptions = [
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "other", label: "Other" },
+];
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -240,7 +245,7 @@ export default function RegisterPage() {
               {/* Role + Gender */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-foreground">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     Clinic Role *
                   </label>
                   <Controller
@@ -250,22 +255,13 @@ export default function RegisterPage() {
                       required: "Role is required",
                     }}
                     render={({ field }) => (
-                      <Select
+                      <ComboboxFilter
+                        options={roleOptions}
                         value={field.value}
-                        onValueChange={field.onChange}
-                      >
-                        <SelectTrigger className="mt-2 h-12! w-full border-none bg-muted">
-                          <SelectValue placeholder="Select role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="patient">
-                            Patient Client
-                          </SelectItem>
-                          <SelectItem value="medical-specialist">
-                            Medical Specialist
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                        onChange={field.onChange}
+                        placeholder="Select role"
+                        width="w-full"
+                      />
                     )}
                   />
 
@@ -277,7 +273,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-foreground">
+                  <label className="mb-2 block text-sm font-medium text-foreground">
                     Gender *
                   </label>
                   <Controller
@@ -287,19 +283,13 @@ export default function RegisterPage() {
                       required: "Gender is required",
                     }}
                     render={({ field }) => (
-                      <Select
+                      <ComboboxFilter
+                        options={genderOptions}
                         value={field.value}
-                        onValueChange={field.onChange}
-                      >
-                        <SelectTrigger className="mt-2 h-12! w-full border-none bg-muted">
-                          <SelectValue placeholder="Select gender" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        onChange={field.onChange}
+                        placeholder="Select gender"
+                        width="w-full"
+                      />
                     )}
                   />
 
