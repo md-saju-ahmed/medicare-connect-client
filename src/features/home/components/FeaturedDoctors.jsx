@@ -64,7 +64,7 @@ export default function FeaturedDoctors() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="overflow-hidden rounded-2xl border bg-background p-0 ring-0 gap-0 group hover:shadow-xl transition-all">
+                <Card className="h-full overflow-hidden rounded-2xl border-border bg-white p-0 ring-0 gap-0 group shadow-xs hover:shadow-sm transition-all flex flex-col">
                   {/* Image */}
                   <div className="relative">
                     <AspectRatio ratio={4 / 3}>
@@ -77,13 +77,13 @@ export default function FeaturedDoctors() {
                     </AspectRatio>
 
                     {/* specialization badge */}
-                    <div className="absolute bottom-3 left-3 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-sm font-medium text-primary">
+                    <div className="absolute bottom-3 left-3 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-sm font-semibold text-primary shadow-sm">
                       {doctor.specialization}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
+                  <div className="p-5 flex flex-col flex-1">
                     <h3 className="text-lg font-bold">{doctor.doctorName}</h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       {doctor.qualifications}
@@ -98,7 +98,7 @@ export default function FeaturedDoctors() {
                         <span className="truncate">{doctor.hospitalName}</span>
                       </div>
                     </div>
-                    <div className="mt-5 flex items-center justify-between gap-4">
+                    <div className="mt-auto pt-5 flex items-center justify-between gap-4">
                       <div>
                         <p className="text-xs text-muted-foreground">
                           Consultation
