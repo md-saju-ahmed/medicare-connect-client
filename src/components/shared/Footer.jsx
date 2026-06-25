@@ -89,10 +89,41 @@ export default function Footer() {
                 <span className="font-bold">MediCare</span> Connect
               </span>
             </Link>
-            <p className="max-w-sm text-base leading-relaxed text-white/80">
+
+            <p className="max-w-sm text-base leading-relaxed text-white/80 mb-6">
               Redefining the healthcare experience through human-centric design
               and expert medical care.
             </p>
+
+            <div className="space-y-2 text-white/80">
+              <p className="flex items-center gap-2 text-sm hover:text-white transition-colors">
+                <span className="font-medium text-white/60">Email:</span>
+                <a
+                  href="mailto:contact@medicare.com"
+                  className="hover:underline"
+                >
+                  contact@medicare.com
+                </a>
+              </p>
+
+              <p className="flex items-center gap-2 text-sm hover:text-white transition-colors">
+                <span className="font-medium text-white/60">Phone:</span>
+                <a href="tel:+8801712345678" className="hover:underline">
+                  +880 1712-345678
+                </a>
+              </p>
+
+              <p className="flex items-start gap-2 text-sm">
+                <span className="font-medium text-white/60 pt-0.5">
+                  Address:
+                </span>
+                <span className="max-w-50 leading-relaxed">
+                  Banani, Dhaka 1213
+                  <br />
+                  Bangladesh
+                </span>
+              </p>
+            </div>
           </div>
 
           {/* Quick Links */}
