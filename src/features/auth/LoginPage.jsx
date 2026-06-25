@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Info } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
@@ -195,6 +195,7 @@ export default function LoginPage() {
                 Continue with Google
               </Button>
             </form>
+
             <p className="mt-8 text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{" "}
               <Link
@@ -204,6 +205,30 @@ export default function LoginPage() {
                 Register
               </Link>
             </p>
+
+            {/* Demo Credentials */}
+            <div className="mt-6 rounded-md border border-primary/20 bg-primary/5 p-3">
+              <p className="mb-2 text-xs font-medium text-foreground">
+                Demo Credentials:
+              </p>
+              <ul className="space-y-1 text-xs text-muted-foreground">
+                <li className="flex items-center gap-2">
+                  <span className="font-medium">Admin:</span>{" "}
+                  <code className="font-mono">admin@medicare.com</code> /{" "}
+                  <code className="font-mono">Admin@123</code>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="font-medium">Doctor:</span>{" "}
+                  <code className="font-mono">doctor@medicare.com</code> /{" "}
+                  <code className="font-mono">Doctor@123</code>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="font-medium">Patient:</span>{" "}
+                  <code className="font-mono">patient@medicare.com</code> /{" "}
+                  <code className="font-mono">Patient@123</code>
+                </li>
+              </ul>
+            </div>
           </div>
         </motion.div>
       </Container>
