@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
+import ComboboxFilter from "@/components/shared/ComboboxFilter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,11 +22,32 @@ import {
   BadgeCheck,
 } from "lucide-react";
 
+// Specialization options
+const specializationOptions = [
+  { value: "all", label: "All Specialties" },
+  { value: "Cardiology", label: "Cardiology" },
+  { value: "Neurology", label: "Neurology" },
+  { value: "Pediatrics", label: "Pediatrics" },
+  { value: "Dermatology", label: "Dermatology" },
+  { value: "Orthopedics", label: "Orthopedics" },
+  { value: "Ophthalmology", label: "Ophthalmology" },
+  { value: "Gynecology", label: "Gynecology" },
+  { value: "Psychiatry", label: "Psychiatry" },
+];
+
+// Sort options
+const sortOptions = [
+  { value: "rating-desc", label: "Highest Rating" },
+  { value: "fee-asc", label: "Fee: Low to High" },
+  { value: "fee-desc", label: "Fee: High to Low" },
+  { value: "experience-desc", label: "Experience: High to Low" },
+];
+
 // card skeleton
 function DoctorCardSkeleton({ viewMode }) {
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-border bg-card shadow-sm ${
+      className={`overflow-hidden rounded-2xl bg-card shadow-sm ${
         viewMode === "list" ? "flex flex-col md:flex-row" : "flex flex-col"
       }`}
     >
@@ -81,6 +104,8 @@ function DoctorCardSkeleton({ viewMode }) {
 }
 
 export default function DoctorsPage() {
+  const searchParams = useSearchParams();
+
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -88,7 +113,9 @@ export default function DoctorsPage() {
   // filters
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [specialization, setSpecialization] = useState("all");
+  const [specialization, setSpecialization] = useState(
+    searchParams.get("specialization") || "all",
+  );
   const [sortBy, setSortBy] = useState("rating-desc");
 
   const [viewMode, setViewMode] = useState("grid");
@@ -162,7 +189,7 @@ export default function DoctorsPage() {
         />
 
         {/* Filters */}
-        <div className="mb-8 rounded-2xl border border-border bg-card p-4 shadow-sm">
+        <div className="mb-8 rounded-xl border border-border bg-card p-4 shadow-xs">
           <div className="grid items-center gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {/* Search */}
             <div className="relative">
@@ -179,46 +206,31 @@ export default function DoctorsPage() {
             </div>
 
             {/* Specialization */}
-            <div className="relative">
-              <Stethoscope
-                size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-              />
-              <select
-                value={specialization}
-                onChange={(e) => setSpecialization(e.target.value)}
-                className="h-11 w-full cursor-pointer rounded-md border border-border bg-muted/50 pl-9 pr-3 text-sm outline-none"
-              >
-                <option value="all">All Specialties</option>
-                <option value="Cardiology">Cardiology</option>
-                <option value="Neurology">Neurology</option>
-                <option value="Pediatrics">Pediatrics</option>
-                <option value="Dermatology">Dermatology</option>
-              </select>
-            </div>
+            <ComboboxFilter
+              options={specializationOptions}
+              value={specialization}
+              onChange={setSpecialization}
+              placeholder="Specialization"
+              icon={Stethoscope}
+              width="w-full"
+              contentWidth="w-[250px]"
+            />
 
             {/* Sorting */}
-            <div className="relative">
-              <SlidersHorizontal
-                size={16}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-              />
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="h-11 w-full cursor-pointer rounded-md border border-border bg-muted/50 pl-9 pr-3 text-sm outline-none"
-              >
-                <option value="rating-desc">Highest Rating</option>
-                <option value="fee-asc">Fee: Low to High</option>
-                <option value="fee-desc">Fee: High to Low</option>
-                <option value="experience-desc">Experience: High to Low</option>
-              </select>
-            </div>
+            <ComboboxFilter
+              options={sortOptions}
+              value={sortBy}
+              onChange={setSortBy}
+              placeholder="Sort by"
+              icon={SlidersHorizontal}
+              width="w-full"
+              contentWidth="w-[250px]"
+            />
 
             {/* View Toggle */}
             <div className="flex justify-end gap-2">
               <Button
-                variant={viewMode === "grid" ? "secondary" : "outline"}
+                variant={viewMode === "grid" ? "default" : "outline"}
                 size="icon"
                 className="h-11 w-11"
                 onClick={() => setViewMode("grid")}
@@ -226,7 +238,7 @@ export default function DoctorsPage() {
                 <Grid3X3 size={18} />
               </Button>
               <Button
-                variant={viewMode === "list" ? "secondary" : "outline"}
+                variant={viewMode === "list" ? "default" : "outline"}
                 size="icon"
                 className="h-11 w-11"
                 onClick={() => setViewMode("list")}
@@ -276,7 +288,7 @@ export default function DoctorsPage() {
               key="empty"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="mx-auto max-w-md rounded-2xl border border-dashed border-border bg-card py-20 text-center shadow-sm"
+              className="mx-auto max-w-lg rounded-2xl border border-dashed border-border bg-card py-20 text-center shadow-xs"
             >
               <Search
                 size={40}
@@ -294,127 +306,136 @@ export default function DoctorsPage() {
             <motion.div
               key="doctors"
               layout
+              transition={{
+                layout: {
+                  type: "spring",
+                  stiffness: 320,
+                  damping: 30,
+                },
+              }}
               className={
                 viewMode === "grid"
                   ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
                   : "flex flex-col gap-5"
               }
             >
-              <AnimatePresence mode="popLayout">
-                {doctors.map((doctor, index) => (
-                  <motion.article
-                    key={doctor._id}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{
-                      y: { type: "spring", stiffness: 220, damping: 24 },
-                      opacity: { duration: 0.2 },
-                      layout: { duration: 0.3 },
-                      delay: Math.min(index * 0.04, 0.2),
-                    }}
-                    className={`group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md ${
+              {doctors.map((doctor) => (
+                <motion.article
+                  key={doctor._id}
+                  layout="position"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{
+                    layout: {
+                      type: "spring",
+                      stiffness: 320,
+                      damping: 30,
+                    },
+                    opacity: {
+                      duration: 0.18,
+                    },
+                    y: {
+                      duration: 0.22,
+                    },
+                  }}
+                  className={`group overflow-hidden rounded-2xl bg-card shadow-xs transition-shadow hover:shadow-md ${
+                    viewMode === "list"
+                      ? "flex flex-col md:flex-row"
+                      : "flex flex-col"
+                  }`}
+                >
+                  {/* Image */}
+                  <div
+                    className={`relative shrink-0 overflow-hidden bg-muted ${
                       viewMode === "list"
-                        ? "flex flex-col md:flex-row"
-                        : "flex flex-col"
+                        ? "h-64 w-full md:h-auto md:w-72"
+                        : "h-56 w-full"
                     }`}
                   >
-                    {/* Image */}
-                    <div
-                      className={`relative shrink-0 overflow-hidden bg-muted ${
-                        viewMode === "list"
-                          ? "h-64 w-full md:h-auto md:w-72"
-                          : "h-56 w-full"
-                      }`}
-                    >
-                      <Image
-                        src={doctor.profileImage}
-                        alt={doctor.doctorName}
-                        fill
-                        sizes="(max-width:768px) 100vw, 33vw"
-                        className="object-cover object-top transition duration-500 group-hover:scale-105"
-                        unoptimized
-                      />
+                    <Image
+                      src={doctor.profileImage}
+                      alt={doctor.doctorName}
+                      fill
+                      sizes="(max-width:768px) 100vw, 33vw"
+                      className="object-cover object-top transition duration-500 group-hover:scale-105"
+                      unoptimized
+                    />
 
-                      {/* Verified Badge */}
-                      <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-card/95 px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-sm">
-                        <BadgeCheck size={15} className="text-primary" />
-                        <span>Verified</span>
+                    {/* Verified Badge */}
+                    <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-card/95 px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-sm">
+                      <BadgeCheck size={15} className="text-primary" />
+                      <span>Verified</span>
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="flex flex-1 flex-col justify-between p-5 md:p-6">
+                    <div>
+                      {/* Specialization & Ratings */}
+                      <div className="mb-3 flex flex-wrap items-center gap-2">
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                          <Stethoscope size={13} />
+                          {doctor.specialization}
+                        </div>
+
+                        <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1">
+                          <Star
+                            size={13}
+                            className="fill-amber-400 text-amber-400"
+                          />
+                          <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
+                            {doctor.rating?.toFixed(1) || "0.0"}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Name */}
+                      <h3 className="text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
+                        {doctor.doctorName}
+                      </h3>
+
+                      {/* Meta */}
+                      <div className="mt-3 space-y-2.5">
+                        <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                          <Building2 size={16} className="shrink-0" />
+                          <span className="truncate">
+                            {doctor.hospitalName}
+                          </span>
+                        </p>
+
+                        <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                          <Briefcase size={16} className="shrink-0" />
+                          <span>{doctor.experience || 0} Years Experience</span>
+                        </p>
                       </div>
                     </div>
 
-                    {/* Card Content */}
-                    <div className="flex flex-1 flex-col justify-between p-5 md:p-6">
+                    {/* Footer */}
+                    <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-4">
+                      {/* Fee */}
                       <div>
-                        {/* Specialization & Ratings */}
-                        <div className="mb-3 flex flex-wrap items-center gap-2">
-                          <div className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-                            <Stethoscope size={13} />
-                            {doctor.specialization}
-                          </div>
-
-                          <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1">
-                            <Star
-                              size={13}
-                              className="fill-amber-400 text-amber-400"
-                            />
-                            <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
-                              {doctor.rating?.toFixed(1) || "0.0"}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Name */}
-                        <h3 className="text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
-                          {doctor.doctorName}
-                        </h3>
-
-                        {/* Meta */}
-                        <div className="mt-3 space-y-2.5">
-                          <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                            <Building2 size={16} className="shrink-0" />
-                            <span className="truncate">
-                              {doctor.hospitalName}
-                            </span>
-                          </p>
-
-                          <p className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                            <Briefcase size={16} className="shrink-0" />
-                            <span>
-                              {doctor.experience || 0} Years Experience
-                            </span>
-                          </p>
-                        </div>
+                        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          Consultation
+                        </p>
+                        <p className="text-xl font-extrabold text-foreground">
+                          ${doctor.consultationFee}
+                        </p>
                       </div>
 
-                      {/* Footer */}
-                      <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-4">
-                        {/* Fee */}
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                            Consultation
-                          </p>
-                          <p className="text-xl font-extrabold text-foreground">
-                            ${doctor.consultationFee}
-                          </p>
-                        </div>
-
-                        {/* Button */}
-                        <Button
-                          asChild
-                          variant="secondary"
-                          className="h-11 rounded-lg px-5 font-medium shadow-sm"
-                        >
-                          <Link href={`/doctors/${doctor._id}`}>
-                            Book Appointment
-                          </Link>
-                        </Button>
-                      </div>
+                      {/* Button */}
+                      <Button
+                        asChild
+                        className="h-11 rounded-lg px-5 font-medium shadow-sm"
+                      >
+                        <Link href={`/doctors/${doctor._id}`}>
+                          Book Appointment
+                        </Link>
+                      </Button>
                     </div>
-                  </motion.article>
-                ))}
-              </AnimatePresence>
+                  </div>
+                </motion.article>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
