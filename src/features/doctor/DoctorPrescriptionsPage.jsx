@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Loader2,
@@ -328,7 +328,7 @@ function PrescriptionCard({
   );
 }
 
-export default function DoctorPrescriptionsPage() {
+function DoctorPrescriptionsPageContent() {
   const { data: session, isPending: sessionLoading } = authClient.useSession();
   const userId = session?.user?.id ?? null;
 
@@ -765,5 +765,23 @@ export default function DoctorPrescriptionsPage() {
         )}
       </motion.div>
     </>
+  );
+}
+
+function DoctorPrescriptionsPageFallback() {
+  return (
+    <div className="space-y-4 p-4">
+      <Skeleton className="h-9 w-64 rounded-md" />
+      <Skeleton className="h-32 w-full rounded-xl" />
+      <Skeleton className="h-32 w-full rounded-xl" />
+    </div>
+  );
+}
+
+export default function DoctorPrescriptionsPage() {
+  return (
+    <Suspense fallback={<DoctorPrescriptionsPageFallback />}>
+      <DoctorPrescriptionsPageContent />
+    </Suspense>
   );
 }

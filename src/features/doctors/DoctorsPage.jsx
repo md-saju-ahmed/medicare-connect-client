@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -103,7 +103,7 @@ function DoctorCardSkeleton({ viewMode }) {
   );
 }
 
-export default function DoctorsPage() {
+function DoctorsPageContent() {
   const searchParams = useSearchParams();
 
   const [doctors, setDoctors] = useState([]);
@@ -441,5 +441,27 @@ export default function DoctorsPage() {
         </AnimatePresence>
       </Container>
     </main>
+  );
+}
+
+function DoctorsPageFallback() {
+  return (
+    <main className="min-h-screen bg-background">
+      <Container className="py-10">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <DoctorCardSkeleton key={index} viewMode="grid" />
+          ))}
+        </div>
+      </Container>
+    </main>
+  );
+}
+
+export default function DoctorsPage() {
+  return (
+    <Suspense fallback={<DoctorsPageFallback />}>
+      <DoctorsPageContent />
+    </Suspense>
   );
 }
