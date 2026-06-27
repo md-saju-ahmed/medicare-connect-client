@@ -68,11 +68,8 @@ export default function Footer() {
       initial={{ y: 80 }}
       whileInView={{ y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{
-        duration: 0.6,
-        ease: "easeOut",
-      }}
-      className="bg-secondary pt-20 pb-10"
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="bg-primary pt-20 pb-10"
     >
       <Container>
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12">
@@ -82,22 +79,27 @@ export default function Footer() {
               href="/"
               className="mb-6 inline-flex items-center gap-3 group"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 transition-colors group-hover:bg-white/20">
-                <HeartPulse className="h-6 w-6 text-white" aria-hidden="true" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-foreground/15 transition-colors group-hover:bg-primary-foreground/20">
+                <HeartPulse
+                  className="h-6 w-6 text-primary-foreground"
+                  aria-hidden="true"
+                />
               </div>
-              <span className="text-xl text-white">
+              <span className="text-xl text-primary-foreground">
                 <span className="font-bold">MediCare</span> Connect
               </span>
             </Link>
 
-            <p className="max-w-sm text-base leading-relaxed text-white/80 mb-6">
+            <p className="max-w-sm text-base leading-relaxed text-primary-foreground/80 mb-6">
               Redefining the healthcare experience through human-centric design
               and expert medical care.
             </p>
 
-            <div className="space-y-2 text-white/80">
-              <p className="flex items-center gap-2 text-sm hover:text-white transition-colors">
-                <span className="font-medium text-white/60">Email:</span>
+            <div className="space-y-2 text-primary-foreground/80">
+              <p className="flex items-center gap-2 text-sm hover:text-primary-foreground transition-colors">
+                <span className="font-medium text-primary-foreground/60">
+                  Email:
+                </span>
                 <a
                   href="mailto:contact@medicare.com"
                   className="hover:underline"
@@ -106,15 +108,17 @@ export default function Footer() {
                 </a>
               </p>
 
-              <p className="flex items-center gap-2 text-sm hover:text-white transition-colors">
-                <span className="font-medium text-white/60">Phone:</span>
+              <p className="flex items-center gap-2 text-sm hover:text-primary-foreground transition-colors">
+                <span className="font-medium text-primary-foreground/60">
+                  Phone:
+                </span>
                 <a href="tel:+8801712345678" className="hover:underline">
                   +880 1712-345678
                 </a>
               </p>
 
               <p className="flex items-start gap-2 text-sm">
-                <span className="font-medium text-white/60 pt-0.5">
+                <span className="font-medium text-primary-foreground/60 pt-0.5">
                   Address:
                 </span>
                 <span className="max-w-50 leading-relaxed">
@@ -128,7 +132,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h4 className="mb-6 font-bold text-white" id="quick-links-heading">
+            <h4
+              className="mb-6 font-bold text-primary-foreground"
+              id="quick-links-heading"
+            >
               Quick Links
             </h4>
             <nav aria-labelledby="quick-links-heading">
@@ -137,7 +144,7 @@ export default function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-white/70 transition-all duration-200 hover:text-white"
+                      className="text-primary-foreground/70 transition-all duration-200 hover:text-primary-foreground"
                     >
                       {item.label}
                     </Link>
@@ -149,7 +156,10 @@ export default function Footer() {
 
           {/* Legal Links */}
           <div className="lg:col-span-2">
-            <h4 className="mb-6 font-bold text-white" id="legal-links-heading">
+            <h4
+              className="mb-6 font-bold text-primary-foreground"
+              id="legal-links-heading"
+            >
               Legal
             </h4>
             <nav aria-labelledby="legal-links-heading">
@@ -158,7 +168,7 @@ export default function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-white/70 transition-all duration-200 hover:text-white"
+                      className="text-primary-foreground/70 transition-all duration-200 hover:text-primary-foreground"
                     >
                       {item.label}
                     </Link>
@@ -170,13 +180,12 @@ export default function Footer() {
 
           {/* Emergency Contact */}
           <div className="lg:col-span-4">
-            <Card className="rounded-3xl bg-[#0b2013] p-8 border border-white/10 h-full">
+            <Card className="rounded-3xl bg-[#0b2013] p-8 border border-primary-foreground/10 h-full">
               <CardHeader className="p-0 mb-4">
-                <CardTitle className="flex items-center gap-2 text-white">
+                <CardTitle className="flex items-center gap-2 text-primary-foreground">
                   <Asterisk
-                    className="h-6 w-6"
+                    className="h-6 w-6 text-destructive"
                     strokeWidth={3}
-                    style={{ color: "#ba1a1a" }}
                     aria-hidden="true"
                   />
                   Emergency Hotline
@@ -185,12 +194,12 @@ export default function Footer() {
               <CardContent className="p-0 space-y-3">
                 <a
                   href="tel:1-800-633-4357"
-                  className="block text-2xl font-bold text-white hover:text-accent"
+                  className="block text-2xl font-bold text-primary-foreground hover:text-accent transition-colors"
                   aria-label="Call emergency hotline: 1-800-MED-HELP"
                 >
                   1-800-MED-HELP
                 </a>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-primary-foreground/70">
                   Available 24/7 for immediate medical assistance.
                 </p>
               </CardContent>
@@ -199,8 +208,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <Separator className="bg-white/10 mb-8" />
-        <div className="flex flex-col items-center justify-between gap-6 text-sm text-white/60 md:flex-row">
+        <Separator className="bg-primary-foreground/10 mb-8" />
+        <div className="flex flex-col items-center justify-between gap-6 text-sm text-primary-foreground/60 md:flex-row">
           <p>&copy; {currentYear} MediCare Connect. All rights reserved.</p>
 
           <div className="flex items-center gap-4">
@@ -211,7 +220,7 @@ export default function Footer() {
                   key={item.label}
                   variant="ghost"
                   size="icon"
-                  className="rounded-full bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                  className="rounded-full bg-primary-foreground/10 text-primary-foreground/70 hover:bg-primary-foreground/20 hover:text-primary-foreground"
                   asChild
                 >
                   <a
