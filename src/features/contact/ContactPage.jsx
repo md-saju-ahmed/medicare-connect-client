@@ -45,7 +45,7 @@ export default function ContactPage() {
                       <div className="relative">
                         <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
-                          className="h-12 pl-10 bg-muted"
+                          className="h-12 pl-10 bg-muted/10"
                           placeholder="John Doe"
                         />
                       </div>
@@ -60,7 +60,7 @@ export default function ContactPage() {
                         <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                           type="email"
-                          className="h-12 pl-10 bg-muted"
+                          className="h-12 pl-10 bg-muted/10"
                           placeholder="john@example.com"
                         />
                       </div>
@@ -73,7 +73,7 @@ export default function ContactPage() {
                     <div className="relative">
                       <Tag className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        className="h-12 pl-10 bg-muted"
+                        className="h-12 pl-10 bg-muted/10"
                         placeholder="How can we help?"
                       />
                     </div>
@@ -85,14 +85,14 @@ export default function ContactPage() {
                     <div className="relative">
                       <MessageSquare className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Textarea
-                        className="h-44 resize-none pl-10 pt-3 bg-muted"
+                        className="h-44 resize-none pl-10 pt-3 bg-muted/10"
                         placeholder="Write your message here..."
                       />
                     </div>
                   </div>
 
                   {/* Submit */}
-                  <Button variant="secondary" className="h-14 w-full gap-2">
+                  <Button variant="default" className="h-14 w-full gap-2">
                     Send Message
                     <SendHorizonal className="h-4 w-4" />
                   </Button>
