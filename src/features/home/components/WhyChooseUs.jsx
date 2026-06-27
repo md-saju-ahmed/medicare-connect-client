@@ -56,9 +56,9 @@ const WhyChooseUs = () => {
                   delay: index * 0.1,
                 }}
               >
-                <Card className="h-full rounded-3xl bg-muted/40 border-border/50 hover:border-primary/40 transition-colors p-0">
+                <Card className="group relative h-full p-0 overflow-hidden border-border/60 ring-0 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-lg">
                   <CardContent className="p-8 space-y-5">
-                    <div className="w-12 h-12 rounded-xl bg-background flex items-center justify-center text-primary shadow-sm">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center border border-primary/10 bg-primary/5 text-primary shadow-xs">
                       <Icon size={25} />
                     </div>
 

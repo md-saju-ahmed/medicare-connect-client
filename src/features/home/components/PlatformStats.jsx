@@ -3,36 +3,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Container from "@/components/shared/Container";
 
-const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-
-  visible: {
-    opacity: 1,
-    y: 0,
-
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 export default function PlatformStats() {
   const [stats, setStats] = useState([]);
 
@@ -55,7 +25,7 @@ export default function PlatformStats() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-secondary py-20 text-white">
+    <section className="relative overflow-hidden bg-primary py-20 text-primary-foreground">
       {/* Wave Background */}
       <div className="pointer-events-none absolute inset-0 opacity-10">
         <svg
@@ -79,31 +49,28 @@ export default function PlatformStats() {
       </div>
 
       <Container>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{
-            once: true,
-            amount: 0.3,
-          }}
-          className="relative z-10 grid grid-cols-2 gap-10 md:grid-cols-4"
-        >
-          {stats.map((stat) => (
+        <div className="relative z-10 grid grid-cols-2 gap-10 md:grid-cols-4">
+          {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              variants={itemVariants}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.15,
+              }}
               className="text-center"
             >
               <h3 className="text-4xl font-bold tracking-tight md:text-5xl">
                 {stat.value}
               </h3>
-              <p className="mt-2 text-sm font-medium text-secondary-foreground/80 md:text-base">
+              <p className="mt-2 text-sm font-medium md:text-base text-primary-foreground/80">
                 {stat.label}
               </p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </Container>
     </section>
   );

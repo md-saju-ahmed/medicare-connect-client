@@ -52,7 +52,6 @@ export default function Hero() {
           <div className="flex flex-wrap gap-3 pt-2 sm:pt-4">
             <Button
               size="lg"
-              variant="secondary"
               className="h-12 sm:h-14 rounded-xl px-6 sm:px-8 gap-2 shadow-lg shadow-primary/10 text-sm sm:text-base"
               asChild
             >
@@ -100,8 +99,8 @@ export default function Hero() {
           className="relative isolate mt-4 md:mt-0"
         >
           {/* Decorative Blobs */}
-          <div className="absolute -top-6 -right-6 sm:-top-8 sm:-right-8 w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-[rgb(135,172,140)]/20 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] animate-pulse z-0 pointer-events-none" />
-          <div className="absolute -bottom-6 -left-6 sm:-bottom-8 sm:-left-8 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-[rgb(205,230,209)]/30 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] z-0 pointer-events-none" />
+          <div className="absolute -top-6 -right-6 sm:-top-8 sm:-right-8 w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-primary/20 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] animate-pulse z-0 pointer-events-none" />
+          <div className="absolute -bottom-6 -left-6 sm:-bottom-8 sm:-left-8 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-accent/30 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] z-0 pointer-events-none" />
 
           <Card className="relative z-10 p-3 sm:p-4 rounded-[24px] sm:rounded-[32px] overflow-hidden border-0! ring-0! shadow-none bg-white max-w-130 mx-auto md:mx-0">
             <AspectRatio ratio={520 / 500}>

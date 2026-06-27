@@ -64,7 +64,7 @@ export default function FeaturedDoctors() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="h-full overflow-hidden rounded-2xl border-border bg-white p-0 ring-0 gap-0 group shadow-xs hover:shadow-sm transition-all flex flex-col">
+                <Card className="h-full overflow-hidden rounded-2xl border-border bg-card p-0 ring-0 gap-0 group shadow-xs hover:shadow-sm transition-all flex flex-col">
                   {/* Image */}
                   <div className="relative">
                     <AspectRatio ratio={4 / 3}>

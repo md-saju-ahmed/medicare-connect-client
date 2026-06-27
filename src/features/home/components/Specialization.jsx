@@ -69,9 +69,9 @@ const Specialization = () => {
                 whileHover={{ y: -6 }}
               >
                 <Link href={`/doctors?specialization=${item.name}`}>
-                  <Card className="group border-none rounded-xl cursor-pointer ring-0! p-0 shadow-xs transition-colors hover:bg-primary">
+                  <Card className="group border-border rounded-xl cursor-pointer ring-0! p-0 shadow-xs transition-colors hover:bg-primary">
                     <CardContent className="p-5 sm:p-8 text-center">
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 rounded-full bg-[#cde6d1] flex items-center justify-center transition group-hover:bg-white/20">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center transition group-hover:bg-white/20">
                         <Icon
                           size={30}
                           className="text-primary transition-colors group-hover:text-white"

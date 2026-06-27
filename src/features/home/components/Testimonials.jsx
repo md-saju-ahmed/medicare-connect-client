@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Container from "../../../components/shared/Container";
 import SectionTitle from "../../../components/shared/SectionTitle";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
@@ -108,8 +108,6 @@ const Testimonials = () => {
               return {
                 _id:
                   review._id?.$oid || review._id || `review-${Math.random()}`,
-                patientName: "Patient",
-                patientImage: null,
                 rating: review.rating || 5,
                 comment:
                   review.reviewText || review.comment || "No comment provided",
@@ -180,7 +178,7 @@ const Testimonials = () => {
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl p-8 space-y-4 shadow-xs"
+                className="bg-card rounded-2xl p-8 space-y-4 shadow-xs"
               >
                 <Skeleton className="h-4 w-24" />
                 <Skeleton className="h-20 w-full" />
@@ -201,7 +199,7 @@ const Testimonials = () => {
         ) : reviews.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">💬</div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            <h3 className="text-xl font-semibold text-foreground mb-2">
               No Reviews Yet
             </h3>
           </div>
@@ -216,7 +214,7 @@ const Testimonials = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded-2xl p-8 shadow-xs hover:shadow-sm transition-all duration-300 relative"
               >
-                <div className="absolute top-4 right-4 text-[#1e3a5f]/10">
+                <div className="absolute top-4 right-4 text-primary/10">
                   <Quote className="w-12 h-12" />
                 </div>
 
@@ -224,12 +222,12 @@ const Testimonials = () => {
                   {renderStars(review.rating)}
                 </div>
 
-                <p className="text-gray-600 mb-6 line-clamp-4 min-h-20 italic">
+                <p className="text-muted-foreground mb-6 line-clamp-4 min-h-20 italic">
                   &quot;{review.comment}&quot;
                 </p>
 
                 <div className="mt-4 flex items-center gap-3">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 bg-[#1e3a5f]">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 bg-primary/20">
                     {review.patientImage ? (
                       <Image
                         src={review.patientImage}
@@ -239,7 +237,7 @@ const Testimonials = () => {
                         onError={(e) => {
                           e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
                             review.patientName || "Patient",
-                          )}&background=1e3a5f&color=fff`;
+                          )}&background=364f37&color=fff`;
                         }}
                       />
                     ) : (
@@ -249,10 +247,10 @@ const Testimonials = () => {
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-700">
+                    <p className="text-sm font-medium text-foreground">
                       {review.patientName}
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-muted-foreground/70">
                       {formatDate(review.createdAt)}
                     </p>
                   </div>
