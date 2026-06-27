@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Info } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,8 @@ export default function LoginPage() {
       }
 
       toast.success("Login successful");
-      router.push("/");
+      const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+      router.push(callbackUrl);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -72,7 +74,7 @@ export default function LoginPage() {
           }}
           className="mx-auto w-full max-w-md"
         >
-          <div className="rounded-lg bg-card p-8 shadow-lg sm:p-10">
+          <div className="rounded-lg bg-card p-8 shadow-xs sm:p-10">
             <div className="mb-8">
               <h1 className="text-3xl font-semibold tracking-tight text-foreground">
                 Welcome Back
@@ -97,7 +99,7 @@ export default function LoginPage() {
                   inputMode="email"
                   autoComplete="email"
                   placeholder="name@example.com"
-                  className="mt-2 h-12 rounded-md border-none bg-muted focus-visible:ring-ring/30"
+                  className="mt-2 h-12 rounded-md bg-muted/10 focus-visible:ring-ring/30"
                   {...register("email", {
                     required: "Email is required",
                   })}
@@ -132,7 +134,7 @@ export default function LoginPage() {
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     placeholder="••••••••"
-                    className="h-12 rounded-md border-none bg-muted pr-12 focus-visible:ring-ring/30"
+                    className="h-12 rounded-md bg-muted/10 pr-12 focus-visible:ring-ring/30"
                     {...register("password", {
                       required: "Password is required",
                       minLength: {
@@ -183,7 +185,7 @@ export default function LoginPage() {
                 type="button"
                 variant="outline"
                 disabled={loading}
-                className="h-12 w-full gap-3 rounded-md"
+                className="h-12 w-full gap-3 rounded-md bg-muted/10"
                 onClick={handleGoogleSignin}
               >
                 <Image
@@ -212,20 +214,35 @@ export default function LoginPage() {
                 Demo Credentials:
               </p>
               <ul className="space-y-1 text-xs text-muted-foreground">
-                <li className="flex items-center gap-2">
+                <li className="flex flex-wrap items-center gap-1 sm:gap-2">
                   <span className="font-medium">Admin:</span>{" "}
-                  <code className="font-mono">admin@medicare.com</code> /{" "}
-                  <code className="font-mono">Admin@123</code>
+                  <code className="font-mono break-all sm:break-normal">
+                    admin@medicare.com
+                  </code>{" "}
+                  <span className="hidden sm:inline">/</span>{" "}
+                  <code className="font-mono break-all sm:break-normal">
+                    Admin@123
+                  </code>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex flex-wrap items-center gap-1 sm:gap-2">
                   <span className="font-medium">Doctor:</span>{" "}
-                  <code className="font-mono">doctor@medicare.com</code> /{" "}
-                  <code className="font-mono">Doctor@123</code>
+                  <code className="font-mono break-all sm:break-normal">
+                    sarah.mitchell@medicare.com
+                  </code>{" "}
+                  <span className="hidden sm:inline">/</span>{" "}
+                  <code className="font-mono break-all sm:break-normal">
+                    Doctor@123
+                  </code>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex flex-wrap items-center gap-1 sm:gap-2">
                   <span className="font-medium">Patient:</span>{" "}
-                  <code className="font-mono">patient@medicare.com</code> /{" "}
-                  <code className="font-mono">Patient@123</code>
+                  <code className="font-mono break-all sm:break-normal">
+                    john.smith@medicare.com
+                  </code>{" "}
+                  <span className="hidden sm:inline">/</span>{" "}
+                  <code className="font-mono break-all sm:break-normal">
+                    Patient@123
+                  </code>
                 </li>
               </ul>
             </div>

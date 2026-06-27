@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
@@ -15,18 +15,34 @@ import ComboboxFilter from "@/components/shared/ComboboxFilter";
 import { authClient } from "@/lib/auth-client";
 
 const roleOptions = [
-  { value: "patient", label: "Patient" },
-  { value: "doctor", label: "Doctor" },
+  {
+    value: "patient",
+    label: "Patient",
+  },
+  {
+    value: "doctor",
+    label: "Doctor",
+  },
 ];
 
 const genderOptions = [
-  { value: "male", label: "Male" },
-  { value: "female", label: "Female" },
-  { value: "other", label: "Other" },
+  {
+    value: "male",
+    label: "Male",
+  },
+  {
+    value: "female",
+    label: "Female",
+  },
+  {
+    value: "other",
+    label: "Other",
+  },
 ];
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -66,7 +82,8 @@ export default function RegisterPage() {
       }
 
       toast.success("Registration successful");
-      router.push("/");
+      const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+      router.push(callbackUrl);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -93,22 +110,12 @@ export default function RegisterPage() {
     <main className="flex items-center justify-center bg-background py-20">
       <Container>
         <motion.div
-          initial={{
-            y: 60,
-            scale: 0.92,
-          }}
-          animate={{
-            y: 0,
-            scale: 1,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 120,
-            damping: 14,
-          }}
+          initial={{ y: 60, scale: 0.92 }}
+          animate={{ y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 120, damping: 14 }}
           className="mx-auto w-full max-w-md"
         >
-          <div className="rounded-lg bg-card p-8 shadow-lg sm:p-10">
+          <div className="rounded-lg bg-card p-8 shadow-xs sm:p-10">
             <div className="mb-8">
               <h1 className="text-3xl font-semibold tracking-tight text-foreground">
                 Create Account
@@ -132,7 +139,7 @@ export default function RegisterPage() {
                   type="text"
                   autoComplete="name"
                   placeholder="John Doe"
-                  className="mt-2 h-12 rounded-md border-none bg-muted"
+                  className="mt-2 h-12 rounded-md bg-muted/10"
                   {...register("name", {
                     required: "Full name is required",
                   })}
@@ -158,7 +165,7 @@ export default function RegisterPage() {
                   type="email"
                   autoComplete="email"
                   placeholder="name@example.com"
-                  className="mt-2 h-12 rounded-md border-none bg-muted"
+                  className="mt-2 h-12 rounded-md bg-muted/10"
                   {...register("email", {
                     required: "Email is required",
                   })}
@@ -185,7 +192,7 @@ export default function RegisterPage() {
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
                     placeholder="••••••••"
-                    className="h-12 rounded-md border-none bg-muted pr-12"
+                    className="h-12 rounded-md bg-muted/10 pr-12"
                     {...register("password", {
                       required: "Password is required",
 
@@ -313,7 +320,7 @@ export default function RegisterPage() {
                   id="photo"
                   type="url"
                   placeholder="https://example.com/photo.jpg"
-                  className="mt-2 h-12 rounded-md border-none bg-muted"
+                  className="mt-2 h-12 rounded-md bg-muted/10"
                   {...register("photo")}
                 />
               </div>
@@ -342,7 +349,7 @@ export default function RegisterPage() {
                 variant="outline"
                 disabled={loading}
                 onClick={handleGoogleSignup}
-                className="h-12 w-full gap-3"
+                className="h-12 w-full gap-3 bg-muted/10"
               >
                 <Image
                   src="/icons/google.svg"
