@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
@@ -15,7 +15,6 @@ import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,7 +45,10 @@ export default function LoginPage() {
       }
 
       toast.success("Login successful");
-      const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+      const callbackUrl =
+        new URLSearchParams(window.location.search).get("callbackUrl") ||
+        "/dashboard";
+
       router.push(callbackUrl);
     } catch (error) {
       toast.error("Something went wrong");

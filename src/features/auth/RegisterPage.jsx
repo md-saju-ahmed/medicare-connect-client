@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
@@ -42,7 +42,6 @@ const genderOptions = [
 
 export default function RegisterPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,7 +81,11 @@ export default function RegisterPage() {
       }
 
       toast.success("Registration successful");
-      const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+      router.push(callbackUrl);
+      const callbackUrl =
+        new URLSearchParams(window.location.search).get("callbackUrl") ||
+        "/dashboard";
+
       router.push(callbackUrl);
     } catch (error) {
       toast.error("Something went wrong");
