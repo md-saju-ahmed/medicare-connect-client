@@ -2,6 +2,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
+import Providers from "@/app/Providers";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -22,10 +23,12 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <Navbar />
-        {children}
-        <Footer />
-        <Toaster position="top-right" reverseOrder={false} />
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+          <Toaster position="top-right" reverseOrder={false} />
+        </Providers>
       </body>
     </html>
   );
