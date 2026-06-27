@@ -16,6 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
+import PlatformStats from "../home/components/PlatformStats";
 
 const values = [
   {
@@ -46,13 +47,6 @@ const values = [
     icon: Lightbulb,
     number: "04",
   },
-];
-
-const stats = [
-  { number: "1,200+", label: "Verified Specialists" },
-  { number: "50k+", label: "Happy Patients" },
-  { number: "100k+", label: "Appointments" },
-  { number: "12k+", label: "Positive Reviews" },
 ];
 
 const team = [
@@ -121,7 +115,7 @@ export default function AboutPage() {
               </p>
               <div className="flex flex-wrap gap-3 pt-4">
                 <Button
-                  variant="secondary"
+                  variant="default"
                   asChild
                   size="lg"
                   className="h-14 px-8"
@@ -213,7 +207,7 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.08, duration: 0.45 }}
-                  className="flex items-start gap-4 rounded-2xl border border-border/50 bg-background p-5 shadow-sm transition-shadow duration-200 hover:shadow-md"
+                  className="flex items-start gap-4 rounded-2xl border border-border/50 bg-background p-5 shadow-xs transition-shadow duration-200 hover:shadow-sm"
                 >
                   <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <CheckCircle2 className="h-4 w-4" />
@@ -249,7 +243,7 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.08, duration: 0.5 }}
                 >
-                  <Card className="group relative h-full overflow-hidden border-border/60 bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-lg">
+                  <Card className="group relative h-full p-0 overflow-hidden border-border/60 bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-lg">
                     <CardContent className="relative p-6 md:p-7">
                       <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary">
                         <Icon className="h-5 w-5" />
@@ -270,29 +264,7 @@ export default function AboutPage() {
       </section>
 
       {/* Statistics */}
-      <section className="bg-secondary py-16 text-primary-foreground">
-        <Container>
-          <div className="grid grid-cols-2 gap-y-10 text-center lg:grid-cols-4 lg:gap-y-0">
-            {stats.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.06, duration: 0.45 }}
-                className="space-y-2 border-r border-primary-foreground/15 last:border-0 max-sm:even:border-r-0"
-              >
-                <p className="text-4xl font-black tracking-tight md:text-5xl">
-                  {item.number}
-                </p>
-                <p className="text-xs font-medium uppercase tracking-widest text-primary-foreground/70 md:text-sm">
-                  {item.label}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <PlatformStats />
 
       {/* Team */}
       <section id="team" className="py-20 lg:py-28">
@@ -354,7 +326,7 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="mx-auto max-w-4xl"
           >
-            <div className="relative overflow-hidden rounded-3xl bg-secondary px-6 py-16 text-center shadow-xl md:px-20 md:py-20">
+            <div className="relative overflow-hidden rounded-3xl bg-primary px-6 py-16 text-center shadow-xl md:px-20 md:py-20">
               <div className="relative">
                 <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-foreground/20 bg-primary-foreground/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground/80">
                   <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground/60" />
