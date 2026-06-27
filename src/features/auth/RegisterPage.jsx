@@ -80,12 +80,11 @@ export default function RegisterPage() {
         return;
       }
 
-      toast.success("Registration successful");
-      router.push(callbackUrl);
       const callbackUrl =
         new URLSearchParams(window.location.search).get("callbackUrl") ||
         "/dashboard";
 
+      toast.success("Registration successful");
       router.push(callbackUrl);
     } catch (error) {
       toast.error("Something went wrong");
