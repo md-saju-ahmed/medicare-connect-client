@@ -62,13 +62,12 @@ const resolveDoctorId = (doctorId) =>
 export default function PatientDashboard() {
   const { user, loading: contextLoading } = useDashboardContext();
 
-  const [appointments, setAppointments] = useState([]);
-  const [payments, setPayments] = useState([]);
+  const [appointments, setAppointments] = useState(null);
+  const [payments, setPayments] = useState(null);
   const [doctorNames, setDoctorNames] = useState({});
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useRef instead of useState so updates don't re-trigger the effect
   const doctorCacheRef = useRef({});
 
   const patientId = user?._id || user?.id;
@@ -108,12 +107,16 @@ export default function PatientDashboard() {
           const all = toArray(data, "appointments");
           patientAppointments = all.filter((a) => isPatientMatch(a, patientId));
           setAppointments(patientAppointments);
+        } else {
+          setAppointments([]);
         }
 
         if (paymentRes.ok) {
           const data = await paymentRes.json();
           const all = toArray(data, "payments");
           setPayments(all.filter((p) => isPatientMatch(p, patientId)));
+        } else {
+          setPayments([]);
         }
 
         const missingIds = [
@@ -194,7 +197,7 @@ export default function PatientDashboard() {
   }
 
   const stats =
-    !loading && appointments.length > 0
+    !loading && appointments !== null
       ? [
           {
             title: "Upcoming Appointments",
@@ -216,7 +219,7 @@ export default function PatientDashboard() {
           },
           {
             title: "Total Payments",
-            value: payments.length.toLocaleString(),
+            value: (payments ?? []).length.toLocaleString(),
             icon: DollarSign,
           },
           {
@@ -232,7 +235,7 @@ export default function PatientDashboard() {
       : null;
 
   const topUpcomingAppointments =
-    !loading && appointments.length > 0
+    !loading && appointments !== null
       ? appointments
           .filter(
             (a) =>
