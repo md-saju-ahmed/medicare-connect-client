@@ -149,7 +149,7 @@ function SidebarProfile({ user, doctorProfile, loading }) {
           {isAdmin && (
             <ShieldCheck size={16} className="text-primary shrink-0" />
           )}
-          {isDoctor && (
+          {isDoctor && doctorProfile?.verificationStatus === "verified" && (
             <BadgeCheck size={16} className="text-primary shrink-0" />
           )}
         </div>
