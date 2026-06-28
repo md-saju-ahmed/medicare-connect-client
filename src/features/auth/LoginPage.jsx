@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
@@ -13,8 +13,10 @@ import { Separator } from "@/components/ui/separator";
 import Container from "@/components/shared/Container";
 import { authClient } from "@/lib/auth-client";
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,10 +31,6 @@ export default function LoginPage() {
       password: "",
     },
   });
-
-  const callbackUrl =
-    new URLSearchParams(window.location.search).get("callbackUrl") ||
-    "/dashboard";
 
   const onSubmit = async (data) => {
     try {
@@ -253,5 +251,13 @@ export default function LoginPage() {
         </motion.div>
       </Container>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
   );
 }

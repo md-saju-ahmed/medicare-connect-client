@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
@@ -40,8 +40,10 @@ const genderOptions = [
   },
 ];
 
-export default function RegisterPage() {
+function RegisterPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,10 +63,6 @@ export default function RegisterPage() {
       photo: "",
     },
   });
-
-  const callbackUrl =
-    new URLSearchParams(window.location.search).get("callbackUrl") ||
-    "/dashboard";
 
   const onSubmit = async (data) => {
     try {
@@ -375,5 +373,13 @@ export default function RegisterPage() {
         </motion.div>
       </Container>
     </main>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterPageContent />
+    </Suspense>
   );
 }
