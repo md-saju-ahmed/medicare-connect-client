@@ -62,6 +62,10 @@ export default function RegisterPage() {
     },
   });
 
+  const callbackUrl =
+    new URLSearchParams(window.location.search).get("callbackUrl") ||
+    "/dashboard";
+
   const onSubmit = async (data) => {
     try {
       setLoading(true);
@@ -80,10 +84,6 @@ export default function RegisterPage() {
         return;
       }
 
-      const callbackUrl =
-        new URLSearchParams(window.location.search).get("callbackUrl") ||
-        "/dashboard";
-
       toast.success("Registration successful");
       router.push(callbackUrl);
     } catch (error) {
@@ -99,7 +99,7 @@ export default function RegisterPage() {
 
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: callbackUrl,
       });
     } catch (error) {
       toast.error(error.message || "Google signup failed");

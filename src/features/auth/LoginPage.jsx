@@ -30,6 +30,10 @@ export default function LoginPage() {
     },
   });
 
+  const callbackUrl =
+    new URLSearchParams(window.location.search).get("callbackUrl") ||
+    "/dashboard";
+
   const onSubmit = async (data) => {
     try {
       setLoading(true);
@@ -45,10 +49,6 @@ export default function LoginPage() {
       }
 
       toast.success("Login successful");
-      const callbackUrl =
-        new URLSearchParams(window.location.search).get("callbackUrl") ||
-        "/dashboard";
-
       router.push(callbackUrl);
     } catch (error) {
       toast.error("Something went wrong");
@@ -60,6 +60,7 @@ export default function LoginPage() {
   const handleGoogleSignin = async () => {
     await authClient.signIn.social({
       provider: "google",
+      callbackURL: callbackUrl,
     });
   };
 
