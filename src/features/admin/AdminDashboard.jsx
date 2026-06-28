@@ -434,7 +434,7 @@ export default function AdminDashboard() {
                 <p className="text-sm">No specialty data available</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 items-center">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6 items-center">
                 <ResponsiveContainer width="100%" height={320}>
                   <PieChart>
                     <Pie
@@ -442,10 +442,7 @@ export default function AdminDashboard() {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ name, percent }) =>
-                        `${name} (${(percent * 100).toFixed(0)}%)`
-                      }
-                      outerRadius={120}
+                      outerRadius={110}
                       fill="#8884d8"
                       dataKey="value"
                     >
@@ -457,7 +454,6 @@ export default function AdminDashboard() {
                       ))}
                     </Pie>
                     <Tooltip />
-                    <Legend />
                   </PieChart>
                 </ResponsiveContainer>
 
